@@ -1,0 +1,100 @@
+<ion-content [fullscreen]="true">
+  <ion-toolbar  color="dark" class="mt-4 py-2">
+    <br>
+    <h1 class="ms-2 ms-md-5 mb-0 titulo"><b>Eventos Registrados</b></h1>
+    <hr class="palito ms-2 ms-md-5 mt-0 mb-3">
+  </ion-toolbar>
+  <br><br>
+  <div class="mt-2 px-3">
+    <div class="container">
+
+      <div class="d-flex mt-1">
+        <ion-searchbar (ngModelChange)="eventosSelected = []" [(ngModel)]="search"  class="ms-auto me-3 my-0 w-100" placeholder="Buscar evento" inputmode="text" type="text" [debounce]="250" ></ion-searchbar>
+      </div>
+      <table class="table mt-0"  >
+        <thead class="red">
+          <tr>
+            <th scope="col" class="red d-none d-md-block">Foto</th>
+            <th scope="col" class="red">Nombre</th>
+            <th scope="col" class="red">Dia y Hora</th>
+            <th scope="col" class="red">Opciones</th>
+          </tr>
+        </thead>
+        <tbody  *ngIf="eventosSelected.length==0">
+          <tr *ngFor="let item of eventos | eventoSearch:search">
+            <th scope="row" class="text-center d-none d-md-block"><ion-img [src]="uri + item.imagen" class="img-fluid"></ion-img></th>
+            <td>{{item.titulo}}</td>
+            <td>{{mon(item.fechaInicio)}}</td>
+            <td>
+  
+              <ion-buttons color="primary" slot="start">
+                <ion-button color="primary" (click)="vistaPrevia(item.id)">
+                  <ion-icon slot="icon-only" name="eye-outline"></ion-icon>
+                </ion-button>
+                <ion-button color="primary" (click)="exportToExcel(item.id)">
+                  <ion-icon slot="icon-only" name="download-outline"></ion-icon>
+                </ion-button>
+                <ion-button color="primary" (click)="modalUser(item.id)">
+                  <ion-icon slot="icon-only" name="people-outline"></ion-icon>
+                </ion-button>
+                <ion-button color="primary" routerLink="editar-evento/{{item.id}}">
+                  <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+                </ion-button>
+                <ion-button color="primary" (click)="deleteEvento(item.id)">
+                  <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+                </ion-button>
+                <ion-button color="primary" *ngIf="item.active" (click)="cerrarEvento(item.id)">
+                  <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+                </ion-button>
+                <ion-button color="primary" *ngIf="!item.active" (click)="reactivar(item.id)">
+                  <ion-icon slot="icon-only" name="power-outline"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+              
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="eventosSelected.length>0">
+          <tr  *ngFor="let item of eventosSelected;">
+            <th scope="row" class="text-center d-none d-md-block"><ion-img [src]="uri + item.imagen" class="img-fluid"></ion-img></th>
+            <td>{{item.titulo}}</td>
+            <td>{{mon(item.fechaInicio)}}</td>
+            <td>
+  
+              <ion-buttons color="primary" slot="start">
+                <ion-button color="primary" (click)="vistaPrevia(item.id)">
+                  <ion-icon slot="icon-only" name="eye-outline"></ion-icon>
+                </ion-button>
+                <ion-button color="primary" (click)="exportToExcel(item.id)">
+                  <ion-icon slot="icon-only" name="download-outline"></ion-icon>
+                </ion-button>
+                <ion-button color="primary" (click)="modalUser(item.id)">
+                  <ion-icon slot="icon-only" name="people-outline"></ion-icon>
+                </ion-button>
+                <ion-button color="primary" routerLink="editar-evento/{{item.id}}">
+                  <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+                </ion-button>
+                <ion-button color="primary" (click)="deleteEvento(item.id)">
+                  <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+                </ion-button>
+                <ion-button color="primary"  (click)="duplicate(item)">
+                  <ion-icon slot="icon-only" name="copy-outline"></ion-icon>
+                </ion-button>
+                <ion-button color="primary" *ngIf="item.active" (click)="cerrarEvento(item.id)">
+                  <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+                </ion-button>
+                <ion-button color="primary" *ngIf="!item.active" (click)="reactivar(item.id)">
+                  <ion-icon slot="icon-only" name="power-outline"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+              
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+ <paginador (pagina)="getPagina($event)" [total]="eventos.length " [divisor]="divisor"></paginador>
+</ion-content>
+
+

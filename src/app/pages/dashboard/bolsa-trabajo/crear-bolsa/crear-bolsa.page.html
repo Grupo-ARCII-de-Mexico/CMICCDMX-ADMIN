@@ -1,0 +1,100 @@
+
+
+<ion-content [fullscreen]="true">
+  <br>
+  <ion-toolbar  color="dark" class=" py-2">
+    <br>
+    <h1 class="ms-2 ms-md-5 mb-0 titulo"><b> {{edit ? 'Editar ' : 'Crear '}} Empleo</b></h1>
+    <hr class="palito ms-2 ms-md-5 mt-0 mb-3">
+  </ion-toolbar>
+  <div class="mt-1 px-4"> 
+  
+   <form [formGroup]="bolsaForm" >
+    <ion-item button (click)="upload()" >
+      <ion-img slot="end" [src]="img" *ngIf="img" style="width: 300px;" class="my-3"></ion-img>
+      <ion-img slot="end" [src]="uri + imagen" *ngIf="!img && imagen" style="width: 300px;" class="my-3"></ion-img> <br>
+    <ion-label>Subir Logo del Empleador <ion-text color="danger">*</ion-text></ion-label>
+    </ion-item>
+    <ion-input required labelPlacement="stacked" fill="outline" type="text" formControlName="titulo">
+      <div slot="label">Titulo de la oferta <ion-text color="danger">*</ion-text></div>
+    </ion-input>
+    <div class="row">
+      <div class="col-md-4 my-3">
+        <ion-input required placeholder="Oficina" labelPlacement="stacked" fill="outline" type="text" formControlName="espacio">
+          <div slot="label">Espacio de Trabajo <ion-text color="danger">*</ion-text></div>
+        </ion-input>
+      </div>
+      <div class="col-md-4 my-3">
+        <ion-input required labelPlacement="stacked" fill="outline" type="text" formControlName="tipoContratacion">
+          <div slot="label">Tipo de contratación <ion-text color="danger">*</ion-text></div>
+        </ion-input>
+      </div>
+      <div class="col-md-4 my-3">
+        <ion-label>Vigencia de la oferta <ion-text color="danger">*</ion-text> </ion-label>
+        <ion-datetime display-format="DD.MM.YYYY HH:mm" formControlName="vigencia">
+          <span slot="time-label">Tiempo</span>
+        </ion-datetime>
+      </div>
+      <div class="col-md-4 my-3">
+        <ion-input required placeholder="Oficina" labelPlacement="stacked" fill="outline" type="text" formControlName="estado">
+          <div slot="label">Estado <ion-text color="danger">*</ion-text></div>
+        </ion-input>
+      </div>
+      <div class="col-md-4 my-3">
+        <ion-input required labelPlacement="stacked" fill="outline" type="text" formControlName="municipio">
+          <div slot="label">Municipio <ion-text color="danger">*</ion-text></div>
+        </ion-input>
+      </div>
+      <div class="col-md-4 my-3">
+        <ion-input  labelPlacement="stacked" fill="outline" type="text" formControlName="delegacion">
+          <div slot="label">Delegación </div>
+        </ion-input>
+      </div>
+      <div class="col-md-8 my-3">
+        <ion-input required labelPlacement="stacked" fill="outline" type="text" formControlName="puestoDeseado">
+          <div slot="label">Puesto Deseado <ion-text color="danger">*</ion-text></div>
+        </ion-input>
+      </div>
+      <div class="col-md-4 my-3">
+        <ion-input required labelPlacement="stacked" fill="outline" type="text" formControlName="escolaridad">
+          <div slot="label">Escolaridad <ion-text color="danger">*</ion-text></div>
+        </ion-input>
+      </div>
+      <div class="col-md-4 my-3">
+        <ion-input required labelPlacement="stacked" fill="outline" type="text" formControlName="edad">
+          <div slot="label">Edad <ion-text color="danger">*</ion-text></div>
+        </ion-input>
+      </div>
+      <div class="col-md-4 my-3">
+        <ion-input required labelPlacement="stacked" fill="outline" type="text" formControlName="salario">
+          <div slot="label">Salario <ion-text color="danger">*</ion-text></div>
+        </ion-input>
+      </div>
+      <div class="col-md-4 my-3">
+        <ion-input required labelPlacement="stacked" fill="outline" type="text" formControlName="estadoCivil">
+          <div slot="label">Estado Civil <ion-text color="danger">*</ion-text></div>
+        </ion-input>
+      </div>
+   
+    </div>
+
+    <ion-textarea formControlName="descripcion" labelPlacement="stacked" fill="outline" class="my-3" rows="10">
+      <div slot="label">Descripción del puesto <ion-text color="danger">*</ion-text></div>
+    </ion-textarea>
+    <ion-textarea formControlName="tareas" labelPlacement="stacked" fill="outline" class="my-3" rows="10">
+      <div slot="label">Tareas a desempeñar <ion-text color="danger">*</ion-text></div>
+    </ion-textarea>
+    <ion-textarea formControlName="prestaciones" labelPlacement="stacked" fill="outline" class="my-3" rows="10">
+      <div slot="label">Prestaciones de Ley <ion-text color="danger">*</ion-text></div>
+    </ion-textarea>
+
+    <ion-checkbox formControlName="mostrarSalario"></ion-checkbox> <ion-text color="dark">
+      <p>Mostrar Salario Al Público</p>
+    </ion-text>
+    <ion-button [disabled]="bolsaForm.invalid" class="mt-4" (click)="save()" expand="block" shape="round">
+     Guardar
+    </ion-button>
+  </form>
+<br><br><br>
+  </div> 
+</ion-content>

@@ -1,0 +1,167 @@
+<ion-content [fullscreen]="true">
+  <br>
+  <ion-toolbar  color="dark" class=" py-2">
+    <br>
+    <h1 class="ms-2 ms-md-5 mb-0 titulo"><b> Licitaciones</b></h1>
+    <hr class="palito ms-2 ms-md-5 mt-0 mb-3">
+
+    <ion-button *ngIf="visible" slot="end" shape="round" class="mx-1 mt-2" (click)="click('in')" expand="block" [color]="file?.uri ? 'success' : 'primary'">
+      <ion-label>{{file?.uri ? 'Archivo Cargado' : 'Subir Licitaciones'}}</ion-label>
+      <input id="in" type="file" accept=".xls, .cvc, .xlsx" (change)="onFileSelected($event)" style="display: none;">
+    </ion-button>
+
+    <ion-button *ngIf="visible" slot="end" class="mx-1 mt-2" [routerLink]="['/dashboard/licitaciones/crear-licitaciones']" routerLinkActive="router-link-active"  shape="round">
+      Crear Licitación
+    </ion-button>
+  </ion-toolbar>
+  <div class="mt-1 px-3">
+    <div class="container">
+  
+      <div class="d-flex mt-5">
+       
+        <hr>
+        <ion-searchbar [(ngModel)]="search" (ngModelChange)="licitacionesSelected=[]" class="ms-auto me-3 my-0 w-100" placeholder="Buscar licitación" inputmode="text" type="text" [debounce]="250" ></ion-searchbar>
+      </div>
+      <table class="table mt-0">
+        <thead class="red">
+          <tr>
+            <th scope="col" class="red ">Portal</th>
+            <th scope="col" class="red">No. Procedimiento</th>
+            <th scope="col" class="red">Vigencia</th>
+            <th scope="col" class="red" *ngIf="visible">Opciones</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="licitacionesSelected.length === 0">
+          <tr *ngFor="let item of licitaciones.slice(((pagina)*divisor),(pagina+1)*divisor)  | licitacionSearch:search">
+            <th scope="row" class="text-center">
+              {{item.portal}}
+            </th>
+            <td>{{item.noProcedimiento}}</td>
+            <td>{{item.dependencia}}</td>
+            <td *ngIf="visible">
+              <ion-buttons color="primary" slot="start">
+
+                <ion-button color="primary" routerLink="editar-licitaciones/{{item.id}}">
+                  <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+                </ion-button>
+                <ion-button color="primary" (click)="deleteEvento(item.id)">
+                  <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+                </ion-button>
+                <ion-button color="primary" (click)="openModal=true; licitacionModal = item">
+                  <ion-icon slot="icon-only" name="eye-outline"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+              
+        
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="licitacionesSelected.length > 0">
+          <tr *ngFor="let item of licitacionesSelected">
+            <th scope="row" class="text-center">
+              {{item.portal}}
+            </th>
+            <td>{{item.noProcedimiento}}</td>
+            <td>{{item.vigencia}}</td>
+            <td *ngIf="visible">
+              <ion-buttons color="primary" slot="start">
+
+                <ion-button color="primary" routerLink="editar-licitaciones/{{item.id}}">
+                  <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+                </ion-button>
+                <ion-button color="primary" (click)="deleteEvento(item.id)">
+                  <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+                </ion-button>
+                <ion-button color="primary" (click)="openModal=true; licitacionModal = item">
+                  <ion-icon slot="icon-only" name="eye-outline"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+              
+        
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <paginador [total]="licitaciones.length" [divisor]="divisor" (pagina)="getPagina($event)" ></paginador>
+    </div>
+  </div>
+
+
+  <ion-modal trigger="open-modal" [isOpen]="openModal" (willDismiss)="openModal=false;" >
+    <ng-template>
+      <ion-header>
+        <ion-toolbar color="dark">
+          <ion-buttons slot="start">
+            <ion-button color="primary" fill="solid" (click)="openModal=false">Cerrar</ion-button>
+          </ion-buttons>
+          <ion-title>{{licitacionModal.noProcedimiento}}</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+ <ion-list>
+  <ion-item>
+    <ion-label>
+      Procedimiento
+      <p>{{licitacionModal.procedimiento}}</p>
+    </ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label>
+      Portal
+      <p>{{licitacionModal.portal}}</p>
+    </ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label>
+      Num. Procedimiento
+      <p>{{licitacionModal.noProcedimiento}}</p>
+    </ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label>
+      Descripción de Expediente
+      <p style="white-space: pre-wrap;">{{licitacionModal.descripcionExpediente}}</p>
+    </ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label>
+      Fecha de Publicación
+      <p>{{licitacionModal.fechaPublicacion}}</p>
+    </ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label>
+      Fecha Limite de Bases
+      <p>{{mon(licitacionModal.fechaLimiteBases)}}</p>
+    </ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label>
+      Fecha de Apertura
+      <p>{{mon(licitacionModal.fechaapertura)}}</p>
+    </ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label>
+      Fallo
+      <p>{{mon(licitacionModal.fallo)}}</p>
+    </ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label>
+      Vigencia
+      <p>{{licitacionModal.vigencia}}</p>
+    </ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label>
+      Link
+      <p>{{licitacionModal.link}}</p>
+    </ion-label>
+  </ion-item>
+ </ion-list>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ion-content>

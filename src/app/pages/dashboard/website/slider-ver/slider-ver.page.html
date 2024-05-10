@@ -1,0 +1,54 @@
+<ion-content [fullscreen]="true">
+  <br>
+  <ion-toolbar  color="dark" class=" py-2">
+    <br>
+    <h1 class="ms-2 ms-md-5 mb-0 titulo"><b> Sliders</b></h1>
+    <hr class="palito ms-2 ms-md-5 mt-0 mb-3">
+  </ion-toolbar>
+  <div class=" px-3">
+    <div class="container">
+      <div class="d-flex mt-1">
+        <ion-searchbar class="ms-auto me-3 my-0 w-100" placeholder="Buscar Slider" inputmode="text" type="text" [debounce]="250" ></ion-searchbar>
+      </div>
+      <table class="table mt-0">
+        <thead class="red">
+          <tr>
+            <th scope="col" class="red d-flex">
+              <span>Foto</span>
+              <span class="ms-auto me-5">Opciones</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+       
+  <ion-list class="w-100">
+    <!-- The reorder gesture is disabled by default, enable it to drag and drop items -->
+    <!-- Casting $event to $any is a temporary fix for this bug https://github.com/ionic-team/ionic-framework/issues/24245 -->
+    <ion-reorder-group [disabled]="false" (ionItemReorder)="handleReorder($any($event))">
+      <ion-item class="w-100" *ngFor="let item of sliders ; let ind = index">
+        <ion-img [src]="uri + item.imagen" class="img-fluid"></ion-img>
+        <ion-buttons color="primary" slot="end">
+          <ion-button color="primary" routerLink="/dashboard/website/slider/{{item.id}}">
+            <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+          </ion-button>
+          <ion-button color="primary" (click)="deleteSlider(item.id)" slot="end">
+            <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-reorder slot="end"></ion-reorder>
+      </ion-item>
+    </ion-reorder-group>
+  </ion-list>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <ion-fab *ngIf="positionChange" slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="updatePosition()">
+      <ion-icon name="save"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>

@@ -1,0 +1,45 @@
+<ion-content [fullscreen]="true">
+  <br>
+  <ion-toolbar  color="dark" class=" py-2">
+    <br>
+    <h1 class="ms-2 ms-md-5 mb-0 titulo"><b> {{editar ? 'Editar' : 'Crear'}} Calendario</b></h1>
+    <hr class="palito ms-2 ms-md-5 mt-0 mb-3">
+  </ion-toolbar>
+
+  <div class="container px-5">
+    <div class="row mt-5">
+
+      <div class="">
+        <h3><strong>Crear Registro En Directorio</strong></h3>
+        <form >
+          <br>
+          <br>
+          <ion-button (click)="click('AA')" expand="block" [color]="file ? 'success' : 'primary'"slot="end">
+            <ion-label>{{file ? 'Archivo Cargado' : 'Seleccionar archivo'}}</ion-label>
+            <input [id]="'AA'" type="file" accept=".pdf" (change)="onFileSelected($event)" style="display: none;">
+          </ion-button>
+          <br>
+          <br>
+          <ion-input type="text" class="my-2 border" label="Mes y Año" labelPlacement="floating" [ngModelOptions]="{standalone: true}" [(ngModel)]="nombre" ></ion-input>
+          <br>
+          <br>
+          <ion-select label="Institución "[ngModelOptions]="{standalone: true}" labelPlacement="stacked" [(ngModel)]="tipo">
+              <ion-select-option [value]="0">ICIC</ion-select-option>
+              <ion-select-option [value]="1">ITC</ion-select-option>
+              <ion-select-option [value]="2">FIC</ion-select-option>
+            </ion-select>
+            <br>
+            <br>
+        
+          <ion-button [disabled]="tipo!== -1 && nombre.length==0" (click)="save()" expand="block"  shape="round">
+            {{editar ? 'Guardar Cambios': 'Crear Calendario'}}
+          </ion-button>
+        </form>
+      </div>
+    </div>
+  
+       
+  </div>
+
+
+</ion-content>

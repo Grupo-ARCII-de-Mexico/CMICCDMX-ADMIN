@@ -1,0 +1,80 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Editar Participante</ion-title>
+    <ion-button class="me-2" (click)="pagar()" slot="end" color="tertiary"  expand="block">
+      Confirmar Pago
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <form [formGroup]="participanteForm" (ngSubmit)="update()" *ngIf="participanteForm">
+    <ion-item>
+      <ion-select label="Tipo de Participante" formControlName="tipo"  placeholder="Seleccione">
+        <ion-select-option [value]="i" *ngFor="let item of tipoPublicoArray;let i = index">{{item}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item >
+      <ion-input labelPlacement="floating" label="No.Afiliado"  formControlName="numAfiliado" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input labelPlacement="floating"   formControlName="nombre" type="text">
+        <div slot="label">Nombre Completo <ion-text color="danger">*</ion-text></div>
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input labelPlacement="floating"   formControlName="telefono" type="text">
+        <div slot="label">Teléfono <ion-text color="danger">*</ion-text></div>
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input labelPlacement="floating"  formControlName="email" type="email">
+        <div slot="label">Correo <ion-text color="danger">*</ion-text></div>
+      </ion-input>
+    </ion-item>
+    <ion-item >
+      <ion-input label="Ingrese el nombre de su empresa" labelPlacement="floating"  formControlName="empresa" type="text"></ion-input>
+    </ion-item>
+    <ion-item >
+      <ion-input labelPlacement="floating"  formControlName="cargo" type="text">
+        <div slot="label">Cargo en la empresa <ion-text color="danger"></ion-text></div>
+      </ion-input>
+    </ion-item>
+    <ion-item >
+    <ion-select label="Delegación CMIC" formControlName="delegacion" [cancelText]="'Cerrar'" okText="Seleccionar" placeholder="Seleccione">
+      <ion-select-option *ngFor="let delegacion of delegaciones" [value]="delegacion?.id">{{delegacion?.ciudad}}</ion-select-option>
+    </ion-select>
+    </ion-item>
+      <ion-item >
+        <ion-input label="Ingrese el nombre de su organización" labelPlacement="floating"  formControlName="organizacion" type="text"></ion-input>
+      </ion-item>
+    <ion-item >
+      <ion-select   formControlName="estado" [cancelText]="'Cerrar'" okText="Seleccionar"  placeholder="Seleccione">
+        <div slot="label">Estado de Origen </div>
+        <ion-select-option *ngFor="let estado of estados" [value]="estado.id">{{estado.nombre}}</ion-select-option>
+        <ion-select-option *ngIf="extranjero"  class="border-top" [value]="extranjero?.id">{{extranjero?.nombre}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item >
+      <ion-input label="RFC" labelPlacement="floating" formControlName="rfc" type="text">
+        </ion-input>
+   
+    </ion-item>
+
+    <ion-item >
+      <ion-input label="CURP" labelPlacement="floating"  formControlName="curp" type="text"></ion-input>
+    </ion-item>
+    <ion-item >
+      <ion-text >Suba su credencial estudiantil o documento que lo avale  <br>
+      </ion-text>
+      <ion-button (click)="upload()" expand="block"  shape="round">
+        Subir Credencial
+      </ion-button>
+    </ion-item>
+  
+    <ion-button expand="block" slot="end"  shape="round" type="submit"   class="mt-3">
+      Actualizar
+    </ion-button>
+    
+  </form>
+</ion-content>

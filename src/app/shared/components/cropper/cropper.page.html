@@ -1,0 +1,17 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="dark">
+    <ion-button color="primary"  (click)="close()">
+      <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+    </ion-button>
+    <ion-button slot="end" (click)="save()">
+      <ion-icon slot="icon-only" name="save"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="d-flex h-100">
+    <angular-cropper #angularCropper  [cropperOptions]="config" [imageUrl]="imageUrl" class="m-auto"></angular-cropper>
+  </div>
+</ion-content>
+

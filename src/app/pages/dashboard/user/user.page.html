@@ -1,0 +1,52 @@
+<ion-content [fullscreen]="true">
+  <br><br>
+  <div class="mt-5"></div>
+<div class="container px-5">
+  <h1><b>Mi Cuenta</b></h1>
+
+  <div class="d-flex">
+    <ion-spinner color="primary" class="mx-auto" *ngIf="!user"> Cargando...</ion-spinner>
+    <ion-card class="shadow mx-auto" mode="ios" *ngIf="user">
+      <ion-card-header>
+        <ion-card-subtitle class="d-flex">
+          <ion-avatar (click)="edit ? img() : ''" class="mx-auto my-3" >
+              <ion-badge *ngIf="edit">
+                <ion-icon class="ms-auto"  shape="round" name="add"></ion-icon>
+              </ion-badge>
+            <img *ngIf="!edit" [src]=" (!user.gravatar ? uri : '') + (user.foto ?? 'avatar.jpg') " />
+            <img *ngIf="edit" [src]="image ?? user.foto " />
+          </ion-avatar>
+        </ion-card-subtitle>
+        <ion-card-title class="text-center mb-3">
+          <ion-item lines="none">
+           <ion-input type="text" class="text-center" [ngClass]="{'bg-gray': !edit}" [readonly]="!edit" [(ngModel)]="nombre"></ion-input>
+          </ion-item>
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+
+        <ion-item *ngIf="edit">
+         <ion-input type="password" [(ngModel)]="password" label="Cambiar Contraseña" labelPlacement="floating"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="edit">
+          <ion-input type="password" [(ngModel)]="password2" label="Confirmar Contraseña" labelPlacement="floating"></ion-input>
+         </ion-item>
+
+        <ion-button class="my-2" (click)="edit=!edit;" expand="block"  shape="round">
+          Actualizar Perfil
+          <ion-icon slot="icon-only" class="mx-2" name="create-outline"></ion-icon>
+        </ion-button>
+        <ion-button *ngIf="edit" (click)="update()" class="my-2" expand="block" shape="round">
+          Guardar Cambios
+          <ion-icon slot="icon-only" class="mx-2" name="save-outline"></ion-icon>
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    
+  </div>
+
+
+  
+</div>
+</ion-content>

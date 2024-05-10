@@ -1,0 +1,33 @@
+
+<ion-content [fullscreen]="true">
+<div class="h-100 d-flex fondo">
+
+    <div class="row m-auto px-5 px-md-0 rounded" style="width: 80vh;">
+      <div class="col-md-6 f border-end d-flex">
+        <img class="m-auto img-fluid" style="width: 200px;" src="../../../assets/logo.png" alt="">
+      </div>
+      <div class="col-md-6 bg-white d-flex">
+        <form class="m-auto p-0" [formGroup]="loginForm" (ngSubmit)="login()">
+          <ion-text color="primary">
+          <h1><strong>Iniciar Sesión</strong></h1>
+        </ion-text>          <ion-item>
+            <ion-input label="Correo" labelPlacement="floating" required formControlName="email" type="text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input label="Contraseña" labelPlacement="floating"  required formControlName="password" [type]="viewPassword ? 'text' : 'password'"></ion-input>
+            <ion-button (click)="viewPassword=!viewPassword" fill="clear">
+              <ion-icon slot="icon-only" [name]="viewPassword ? 'eye-off-outline' :'eye-outline'"></ion-icon>
+            </ion-button>
+          </ion-item>
+          <div class="d-flex my-3">
+            <ion-button class="mx-auto" block color="primary" shape="round" type="submit" [disabled]="loginForm.invalid">
+              Iniciar sesión
+            </ion-button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+
+</div>
+</ion-content>

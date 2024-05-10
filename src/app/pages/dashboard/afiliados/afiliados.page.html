@@ -1,0 +1,218 @@
+
+<ion-content [fullscreen]="true">
+  <br>
+  <ion-toolbar  color="dark" class=" py-2">
+    <br>
+    <h1 class="ms-2 ms-md-5 mb-0 titulo"><b> Afiliados</b></h1>
+    <hr class="palito ms-2 ms-md-5 mt-0 mb-3">
+  </ion-toolbar>
+  <div class="mt-1 px-3">
+    <div class="container">
+  
+      <div class="d-flex mt-5">
+       
+        <hr>
+        <ion-searchbar [(ngModel)]="search" (ngModelChange)="afiliadosSelected=[]" class="ms-auto me-3 my-0 w-100" placeholder="Buscar Afiliado" inputmode="text" type="text" [debounce]="250" ></ion-searchbar>
+      </div>
+      <table class="table mt-0">
+        <thead class="red">
+          <tr>
+            <th scope="col" class="red ">Inicio de Operaciones</th>
+            <th scope="col" class="red">Nombre/ Razón Social</th>
+            <th scope="col" class="red">Num Afiliado</th>
+            <th scope="col" class="red">Aniversario</th>
+            <th scope="col" class="red">Cumpleaños</th>
+            <th scope="col" class="red">Tipo</th>
+            <th scope="col" class="red" >Opciones</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="afiliadosSelected.length === 0">
+          <tr *ngFor="let item of afiliados.slice(((pagina)*divisor),(pagina+1)*divisor)  | afiliadoSearch:search">
+            <td>{{formatDate(item.inicioOperaciones)}}</td>
+            <td>{{item.nombre}}</td>
+            <td>{{item.registro}}</td>
+            <td>{{mon(item.inicioOperaciones)}}</td>
+            <td>{{mon(item.cumpleanos)}}</td>
+            <td>{{'Afiliado'}}</td>
+            <td>
+              <ion-buttons color="primary" slot="start">
+                <ion-button color="primary" (click)="openModal=true;afiliadoModal=item">
+                  <ion-icon slot="icon-only" name="eye-outline"></ion-icon>
+                </ion-button>
+                <ion-button color="primary" routerLink="editar/{{item.id}}">
+                  <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+                </ion-button>
+               
+              </ion-buttons>
+              
+        
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="afiliadosSelected.length > 0">
+          <tr *ngFor="let item of afiliadosSelected">
+            <td>{{formatDate(item.inicioOperaciones)}}</td>
+            <td>{{item.nombre}}</td>
+            <td>{{item.registro}}</td>
+            <td>{{mon(item.inicioOperaciones)}}</td>
+            <td>{{mon(item.cumpleanos)}}</td>
+            <td>{{'Afiliado'}}</td>
+            <td>
+              <ion-buttons color="primary" slot="start">
+                <ion-button color="primary" (click)="openModal=true; afiliadoModal=item">
+                  <ion-icon slot="icon-only" name="eye-outline"></ion-icon>
+                </ion-button>
+                <ion-button color="primary" routerLink="editar/{{item.id}}">
+                  <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+              
+        
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <paginador [total]="afiliados.length" [divisor]="divisor" (pagina)="getPagina($event)" ></paginador>
+    </div>
+  </div>
+</ion-content>
+
+
+<ion-modal trigger="open-modal" [isOpen]="openModal" (willDismiss)="openModal=false;" >
+  <ng-template>
+    <ion-header>
+      <ion-toolbar color="dark">
+        <ion-buttons slot="start">
+          <ion-button color="primary" fill="solid" (click)="openModal=false">Cerrar</ion-button>
+        </ion-buttons>
+        <ion-title>{{afiliadoModal.nombre}}</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+<ion-list>
+ <ion-item>
+  <ion-label>
+    Nombre
+    <p>{{afiliadoModal.nombre}}</p>
+  </ion-label>
+ </ion-item>
+
+  <ion-item>
+    <ion-label>
+      Registro
+      <p>{{afiliadoModal.registro}}</p>
+    </ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      Inicio de Operaciones
+      <p>{{formatDate(afiliadoModal.inicioOperaciones)}}</p>
+    </ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      Cumpleaños
+      <p>{{mon(afiliadoModal.cumpleanos)}}</p>
+    </ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      Aniversario
+      <p>{{mon(afiliadoModal.inicioOperaciones)}}</p>
+    </ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      Correo 1
+      <p>{{afiliadoModal.correo1 ?? 'No Registrado'}}</p>
+    </ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      Correo 2
+      <p>{{afiliadoModal.correo2 ?? 'No Registrado'}}</p>
+    </ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      Teléfono 1
+      <p>{{afiliadoModal.telefono1 ?? 'No Registrado'}}</p>
+    </ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      Teléfono 2
+      <p>{{afiliadoModal.telefono2 ?? 'No Registrado'}}</p>
+    </ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      Años Consecutivos
+      <p>{{afiliadoModal.anosConsecutivos}}</p>
+    </ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      Certificado
+      <p>{{afiliadoModal.certificado}}</p>
+    </ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      Fecha de Pago Delegación
+      <p>{{afiliadoModal.fechaPagoDelegacion}}</p>
+    </ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      Fecha de Emisión
+      <p>{{afiliadoModal.fechaEmision}}</p>
+    </ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      Fecha de Facturación
+      <p>{{afiliadoModal.fechaFacturacion}}</p>
+    </ion-label>
+  </ion-item>
+
+
+  <ion-item>
+    <ion-label>
+      Especialidad 1
+      <p>{{afiliadoModal.especialidad1 ?? 'No Registrado'}}</p>
+    </ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      Especialidad 2
+      <p>{{afiliadoModal.especialidad2 ?? 'No Registrado'}}</p>
+    </ion-label>  
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      Especialidad 3
+      <p>{{afiliadoModal.especialidad3 ?? 'No Registrado'}}</p>
+    </ion-label>
+  </ion-item>
+
+</ion-list>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+

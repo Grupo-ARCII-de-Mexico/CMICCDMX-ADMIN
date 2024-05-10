@@ -1,0 +1,43 @@
+
+<ion-content [fullscreen]="true">
+  <br><br>
+  <div class="mt-5 px-3">
+    <div class="container" *ngIf="negocio">
+      <h1 class="my-3">Solicitudes para <b> {{negocio.empresa}}</b></h1>
+    </div>
+
+    <div class="d-flex mt-5">
+      <ion-searchbar [(ngModel)]="search" class="ms-auto me-3 my-0 w-100" placeholder="Buscar empresa" inputmode="text" type="text" [debounce]="250" ></ion-searchbar>
+    </div>
+    <table class="table mt-0">
+      <thead class="red">
+        <tr>
+          <th scope="col" class="red ">Nombre</th>
+          <th scope="col" class="red">RFC</th>
+          <th scope="col" class="red">Teléfono</th>
+          <th scope="col" class="red">Correo</th>
+          <th scope="col" class="red">Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of negocio?.oportunidadNegocio | enterpriseSearch:search; let i = index">
+          <td>{{item?.empresa}}</td>
+          <td>{{item?.rfc}}</td>
+          <td>{{item?.contacto?.telefono}}</td>
+          <td>{{item?.contacto?.email}}</td>
+          <td>
+          <ion-buttons slot="start">
+            <ion-button color="primary" fill="clear" (click)="view(item)">
+              <ion-icon slot="icon-only" name="clipboard-outline"></ion-icon>
+            </ion-button>
+            <ion-button *ngIf="!ext"  color="primary" fill="clear" (click)="eliminar(item.id)">
+              <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+</ion-content>

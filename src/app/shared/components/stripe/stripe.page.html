@@ -1,0 +1,45 @@
+<ion-card mode="ios">
+  <ion-card-content [ngClass]="{
+    'visa' : brand === tipoTarjeta.VISA,
+    'amex' : brand === tipoTarjeta.AMERICAN_EXPRESS,
+    'mastercard' : brand === tipoTarjeta.MASTERCARD,
+    'initial' : brand === tipoTarjeta.DESCONOCIDA || !brand}" class="visa">
+  <ngx-stripe-card-group
+  [formGroup]="stripeTest"
+  [elementsOptions]="elementsOptions"
+>
+
+<ion-grid fixed>
+  <ion-row>
+    <ion-col size="12">
+      <img *ngIf="brand" class="img mb-3" src="../../../../../assets/img/{{brand}}.png" alt=""> <br>
+    </ion-col>
+    <ion-col size="2" class="ion-margin-end ">
+      <img class="chip " src="../../../../../assets/img/chip.png" alt="" >
+    </ion-col>
+    <ion-col size="9">
+      <ngx-stripe-card-number (change)="identificarMarcaTarjeta($event)"  class="col-6 my-3" [options]="cardOptions"></ngx-stripe-card-number>
+    </ion-col>
+    <ion-col size="4">
+      <ngx-stripe-card-expiry class="my-3" [options]="cardOptions"></ngx-stripe-card-expiry>
+    </ion-col>
+    <ion-col size="8">
+      <ngx-stripe-card-cvc  class="col-4 my-3" [options]="cardOptions"></ngx-stripe-card-cvc>
+    </ion-col>
+    <ion-col size="12">
+      <ion-input type="text" formControlName="name" placeholder="Titular de Tarjeta"></ion-input>
+    </ion-col>
+   
+  </ion-row>
+</ion-grid>
+
+</ngx-stripe-card-group>
+  </ion-card-content>
+</ion-card>
+
+<ion-footer>
+  <ion-button  expand="block" (click)="save()" [disabled]="!this.tarjetaValida || stripeTest.controls['name'].value === null " shape="round">
+   Finalizar Registro
+  </ion-button>
+  </ion-footer>
+  

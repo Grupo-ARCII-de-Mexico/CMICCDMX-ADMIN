@@ -1,0 +1,19 @@
+<ion-content>
+  <ion-fab *ngIf="!visor" (click)="dismiss(false)" vertical="top" horizontal="start" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="close-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <capacitor-google-map id="map">
+
+      
+  </capacitor-google-map>
+  <div class="fixed-top d-flex">
+    <ion-searchbar *ngIf="!visor" placeholder="Buscar lugar" class="ms-auto me-4 mt-2" [(ngModel)]="text" type="text" (ionInput)="search()" [debounce]="800" ></ion-searchbar>
+  </div>
+  <div class="fixed-bottom d-flex">
+    <ion-button *ngIf="!visor" [disabled]="!this.marker" class="mx-auto mb-3" (click)="dismiss()" expand="block"  shape="round">
+      Guardar Ubicación
+    </ion-button>
+  </div> 
+</ion-content>

@@ -1,0 +1,42 @@
+<ion-content [fullscreen]="true">
+  <br>
+  <ion-toolbar  color="dark" class=" py-2">
+    <br>
+    <h1 class="ms-2 ms-md-5 mb-0 titulo"><b> Boletines</b></h1>
+    <hr class="palito ms-2 ms-md-5 mt-0 mb-3">
+  </ion-toolbar>
+  <div class=" px-3">
+    <div class="container">
+    
+      <div class="d-flex mt-1">
+        <ion-searchbar class="ms-auto me-3 my-0 w-100" placeholder="Buscar Boletín" inputmode="text" type="text" [debounce]="250" ></ion-searchbar>
+      </div>
+      <table class="table mt-0">
+        <thead class="red">
+          <tr>
+            <th scope="col" class="red d-none d-md-block">Foto</th>
+            <th scope="col" class="red">Titulo</th>
+            <th scope="col" class="red">Opciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of sliders; let ind = index">
+            <th scope="row" class="text-center d-none d-md-block"><ion-img [src]="meterimagen(item)" class="img-fluid"></ion-img></th>
+            <td>{{item.titulo}}</td>
+            <td>
+              <ion-buttons color="primary" slot="start">
+                <ion-button color="primary" routerLink="/dashboard/website/boletines/{{item.id}}">
+                  <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+                </ion-button>
+                <ion-button color="primary" (click)="deleteSlider(item.id)">
+                  <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+              
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</ion-content>

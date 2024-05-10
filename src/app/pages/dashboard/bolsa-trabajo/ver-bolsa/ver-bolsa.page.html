@@ -1,0 +1,179 @@
+
+<ion-content [fullscreen]="true">
+  <br>
+  <ion-toolbar  color="dark" class=" py-2">
+    <br>
+    <h1 class="ms-2 ms-md-5 mb-0 titulo"><b> Bolsa de Trabajo</b></h1>
+    <hr class="palito ms-2 ms-md-5 mt-0 mb-3">
+  </ion-toolbar>
+  <div class="mt-1 px-3">
+    <div class="container">
+  
+      <div class="d-flex mt-5">
+       
+        <hr>
+        <ion-searchbar [(ngModel)]="search" (ngModelChange)="bolsaSelected=[]" class="ms-auto me-3 my-0 w-100" placeholder="Buscar Empleo" inputmode="text" type="text" [debounce]="250" ></ion-searchbar>
+      </div>
+      <table class="table mt-0">
+        <thead class="red">
+          <tr>
+            <th scope="col" class="red ">Logo</th>
+            <th scope="col" class="red">Nombre</th>
+            <th scope="col" class="red">Puesto</th>
+            <th scope="col" class="red" >Opciones</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="bolsaSelected.length === 0">
+          <tr *ngFor="let item of bolsa.slice(((pagina)*divisor),(pagina+1)*divisor)  | bolsaTrabajoSearch:search">
+            <th scope="row" class="text-center">
+              <ion-img [src]="uri+item.foto"></ion-img>
+            </th>
+            <td>{{item.titulo}}</td>
+            <td>{{item.puestoDeseado}}</td>
+            <td>
+              <ion-buttons color="primary" slot="start">
+                <ion-button color="primary" routerLink="editar-bolsa/{{item.id}}">
+                  <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+                </ion-button>
+                <ion-button color="primary" routerLink="editar-bolsa/{{item.identificador}}">
+                  <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+                </ion-button>
+                <ion-button color="primary" (click)="deleteEvento(item.id)">
+                  <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+                  <ion-button color="primary" (click)="openModalPostulante = true; licitacionModal = item ">
+                    <ion-icon slot="icon-only" name="people-outline"></ion-icon>
+                  </ion-button>
+                </ion-button>
+              </ion-buttons>
+              
+        
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="bolsaSelected.length > 0">
+          <tr *ngFor="let item of bolsaSelected">
+            <th scope="row" class="text-center">
+              <ion-img [src]="uri+item.foto"></ion-img>
+            </th>
+            <td>{{item.titulo}}</td>
+            <td>{{item.puestoDeseado}}</td>
+            <td>
+              <ion-buttons color="primary" slot="start">
+
+                <ion-button color="primary" routerLink="editar-bolsa/{{item.id}}">
+                  <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+                </ion-button>
+                <ion-button color="primary" (click)="deleteEvento(item.id)">
+                  <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+                </ion-button>
+                <ion-button color="primary" (click)="openModal=true; licitacionModal = item">
+                  <ion-icon slot="icon-only" name="eye-outline"></ion-icon>
+                </ion-button>
+                <ion-button color="primary" (click)="openModalPostulante = true; licitacionModal = item ">
+                  <ion-icon slot="icon-only" name="people-outline"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+              
+        
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <paginador [total]="bolsa.length" [divisor]="divisor" (pagina)="getPagina($event)" ></paginador>
+    </div>
+  </div>
+</ion-content>
+
+
+<ion-modal trigger="open-modal" [isOpen]="openModal" (willDismiss)="openModal=false;" >
+  <ng-template>
+    <ion-header>
+      <ion-toolbar color="dark">
+        <ion-buttons slot="start">
+          <ion-button color="primary" fill="solid" (click)="openModal=false">Cerrar</ion-button>
+        </ion-buttons>
+        <ion-title>{{licitacionModal.titulo}}</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+<ion-list>
+<ion-item>
+  <ion-label>
+    Logo
+    <p>   <ion-img [src]="uri+licitacionModal.foto"></ion-img></p>
+  </ion-label>
+</ion-item>
+<ion-item>
+  <ion-label>
+    Área
+    <p>{{licitacionModal.estado}}, {{licitacionModal.municipio}}, {{licitacionModal.delegacion != null ? licitacionModal.delegacion : ''}}</p>
+  </ion-label>
+</ion-item>
+<ion-item>
+  <ion-label>
+    Descripción
+    <p [innerHTML]="toHtml(licitacionModal.descripcion)"></p>
+  </ion-label>
+</ion-item>
+<ion-item>
+  <ion-label>
+    Tipo de Trabajo
+    <p style="white-space: pre-wrap;">{{licitacionModal.tipoContratacion}}</p>
+  </ion-label>
+</ion-item>
+<ion-item>
+  <ion-label>
+    Escolaridad
+    <p>{{licitacionModal.escolaridad}}</p>
+  </ion-label>
+</ion-item>
+<ion-item>
+  <ion-label>
+   Puesto
+    <p>{{licitacionModal.puestoDeseado}}</p>
+  </ion-label>
+</ion-item>
+</ion-list>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+
+<ion-modal trigger="open-modal" [isOpen]="openModalPostulante" (willDismiss)="openModalPostulante=false;" >
+  <ng-template>
+    <ion-header>
+      <ion-toolbar color="dark">
+        <ion-buttons slot="start">
+          <ion-button color="primary" fill="solid" (click)="openModalPostulante=false">Cerrar</ion-button>
+        </ion-buttons>
+        <ion-title>Postulantes de {{licitacionModal.titulo}}</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <table class="table mt-0">
+        <thead class="red">
+          <tr>
+            <th scope="col" class="red ">Nombre</th>
+            <th scope="col" class="red">Teléfono</th>
+            <th scope="col" class="red">Correo</th>
+            <th scope="col" class="red" >Currículum</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of licitacionModal.postulantes">
+    
+            <td>{{item.nombre}}</td>
+            <td>{{item.telefono}}</td>
+            <td>{{item.correo}}</td>
+            <td>
+              <ion-button *ngIf="item.curriculum" slot="start" fill="clear" (click)="download(item.curriculum)">
+                <ion-icon slot="icon-only" name="download-outline"></ion-icon>
+              </ion-button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </ion-content>
+  </ng-template>
+</ion-modal>

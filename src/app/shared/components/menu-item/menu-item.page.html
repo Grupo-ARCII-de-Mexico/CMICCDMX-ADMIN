@@ -1,0 +1,21 @@
+
+  <ion-item class="under"  lines="none" [color]=" url === item.url ? 'secondary' : 'primary'"   *ngIf="item.type === typeItem.ITEM "  button (click)="actionMenu(item.url,$event)" >
+    <ion-label >{{item.label}}</ion-label>
+    <ion-icon  slot="end" [name]="item.icon"></ion-icon>
+  </ion-item>
+
+  <ion-accordion-group  *ngIf="item.type === typeItem.ACCORDION  && url">
+    <ion-accordion  [value]="item.url">
+      <ion-item [color]=" url.includes(item.url.split('dashboard')[1]) ? 'secondary' : 'primary'"  slot="header" class="under"  >
+        <ion-label>{{item.label}}</ion-label>
+      </ion-item>
+      <div  slot="content">
+        <ion-list class="ion-no-padding" >
+          <ion-item [color]=" url === item.url ? 'secondary' : 'primary'"  *ngFor="let item of item.accordionItems"  [lines]="lines" detail="false" routerLinkActive="active-link"    button (click)="actionMenu(item.url,$event)">
+            <ion-label class="ps-3">{{item.label}}</ion-label>
+            <ion-icon   routerLinkActive="active-link"  slot="end" [name]="item.icon"></ion-icon>
+          </ion-item>
+        </ion-list>
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>

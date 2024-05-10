@@ -1,0 +1,23 @@
+:root{
+    --ion-color-whatsapp: #25D366;
+    --ion-color-whatsapp-rgb: 37, 211, 102;
+    --ion-color-whatsapp-contrast: #f4f5f8;
+    --ion-color-whatsapp-contrast-rgb: 0, 0, 0;
+    --ion-color-whatsapp-shade: #25D366;
+    --ion-color-whatsapp-tint: #25D366;
+    .popover-counter{
+        top: calc(610.40625px + var(--offset-y, 0));
+        left: calc(976px - var(--ion-safe-area-right, 0) + var(--offset-x, 0));
+        transform-origin: right bottom;
+        width: 300px!important;
+    }
+
+}
+ion-popover::part(backdrop) {
+    background-color: rgba(6, 14, 106,0.0);
+  }
+.mt{
+    margin-top: 250px;
+    margin-right: auto;
+    margin-left: 1%;
+}

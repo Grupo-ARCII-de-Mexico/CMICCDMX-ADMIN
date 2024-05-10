@@ -1,0 +1,41 @@
+<ion-content [fullscreen]="true">
+  <br>
+  <ion-toolbar  color="dark" class=" py-2">
+    <br>
+    <h1 class="ms-2 ms-md-5 mb-0 titulo"><b> {{editar ? 'Editar' : 'Crear'}} Registro</b></h1>
+    <hr class="palito ms-2 ms-md-5 mt-0 mb-3">
+  </ion-toolbar>
+
+  <div class="container px-5">
+    <div class="row mt-5">
+      <div class="col-md-4">
+        <h3><strong>Crear Departamentos</strong></h3>
+        <ion-input type="text" class="my-2 border" label="Nombre del Departamento" labelPlacement="floating" [(ngModel)]="depa"></ion-input>
+        <ion-button (click)="createDepartamento()" [disabled]="depa.length===0" expand="block"  shape="round">
+          Guardar Departamento
+        </ion-button>
+      </div>
+      <div class="col-md-8">
+        <h3><strong>Crear Registro En Directorio</strong></h3>
+        <form [formGroup]="depaForm">
+          <ion-input type="text" class="my-2 border" label="Nombre Completo" labelPlacement="floating" formControlName="nombre" ></ion-input>
+          <ion-input type="text" class="my-2 border" label="Correo" labelPlacement="floating" formControlName="correo" ></ion-input>
+          <ion-input type="text" class="my-2 border" label="Cargo" labelPlacement="floating" formControlName="cargo" ></ion-input>
+          
+            <ion-select label="Departamento" labelPlacement="stacked" formControlName="departamento">
+              <ion-select-option *ngFor="let item of departamentos" [value]="item.id">{{item.nombre}}</ion-select-option>
+            </ion-select>
+
+        
+          <ion-button [disabled]="depaForm.invalid" (click)="save()" expand="block"  shape="round">
+            {{editar ? 'Guardar Cambios': 'Crear Registro'}}
+          </ion-button>
+        </form>
+      </div>
+    </div>
+  
+       
+  </div>
+
+
+</ion-content>

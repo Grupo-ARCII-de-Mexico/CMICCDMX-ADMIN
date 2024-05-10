@@ -1,0 +1,95 @@
+<ion-content [fullscreen]="true">
+  <br>
+  <ion-toolbar  color="dark" class=" py-2">
+    <br>
+    <h1 class="ms-2 ms-md-5 mb-0 titulo"><b> {{edit ? 'Editar' : 'Crear'}} Oportunidades de Negocio</b></h1>
+    <hr class="palito ms-2 ms-md-5 mt-0 mb-3">
+  </ion-toolbar>
+  <div class="mt-1 px-3">
+    <div class="container">
+      <div class="container">
+        <ion-item button (click)="uploadImage()">
+          <ion-label>Subir Imagen</ion-label>
+          <ion-img *ngIf="logotipo" [src]="logotipo" style="max-width: 200px; max-height: 330px;"></ion-img>
+        </ion-item>
+  
+        <ion-item>
+          <ion-input [(ngModel)]="empresa" type="text" labelPlacement="floating"  label="Nombre de la empresa"></ion-input>
+        </ion-item>
+  
+        <h3 class="my-3"><b>Agregar Documentos</b></h3>
+        <ion-item>
+            <ion-input [(ngModel)]="document.texto" type="text" labelPlacement="floating"  label="Ingrese Nombre del Documento"></ion-input>
+           
+          <ion-button [disabled]="document.texto ==='' " slot="end" (click)="agregarDocumentos()">
+            <ion-icon slot="icon-only" name="add"></ion-icon>
+          </ion-button>
+        </ion-item>
+        <ion-item>
+          <ion-textarea  labelPlacement="floating"  label="Ingrese Descripción" [(ngModel)]="document.descripcion"></ion-textarea>
+        </ion-item>
+        <h5 class="my-2" *ngIf="documentos.length > 0"> <b>Documentos Agregados</b> </h5>
+        <ion-item *ngFor="let item of documentos;let i = index">
+          <ion-label>
+            {{item.texto}}
+            <p>{{item.descripcion}}</p>
+          </ion-label>
+          <ion-button slot="end" (click)="eliminarDocumentos(i)">
+            <ion-icon slot="icon-only" name="close"></ion-icon>
+          </ion-button>
+        </ion-item>
+  
+        <h3 class="my-3"><b>Agregar Especialidades</b></h3>
+        <ion-item>
+            <ion-input [(ngModel)]="especialidad" type="text" labelPlacement="floating"  label="Ingrese Especialidad"></ion-input>
+          <ion-button [disabled]="!especialidad || especialidad ===''" slot="end" (click)="agregarEspecialidad()">
+            <ion-icon slot="icon-only" name="add"></ion-icon>
+          </ion-button>
+        </ion-item>
+        <ion-item *ngFor="let item of especialidades;let i = index">
+          <ion-label>{{item}}</ion-label>
+          <ion-button slot="end" (click)="eliminar(i)">
+            <ion-icon slot="icon-only" name="close"></ion-icon>
+          </ion-button>
+        </ion-item>
+  
+      </div>
+    </div>
+  
+  
+  
+  
+    <div class="container">
+      <h3 class="my-3"><b>Información Adicional </b></h3>
+      <div class="NgxEditor__Wrapper">
+        <ngx-editor-menu [toolbar]="toolbar" [editor]="editor"> </ngx-editor-menu>
+        <ngx-editor  [editor]="editor" [(ngModel)]="convocatoria" [placeholder]="'Descripción del evento'"></ngx-editor>
+      </div>
+      <ion-item >
+        <ion-label>
+            PDF con información adicional<ion-text color="danger">
+            *
+            </ion-text>
+          <p>(formato PDF)</p>
+        
+        </ion-label>
+        <ion-button *ngIf="valid()" slot="start" fill="clear" (click)="download(documentoOpcional)">
+          <ion-icon slot="icon-only" name="download-outline"></ion-icon>
+        </ion-button>
+     
+        <ion-button *ngIf="edit" (click)="click()" expand="block"  fill="clear" slot="end">
+          <ion-label>Seleccionar archivo</ion-label>
+          <input id="opcional" type="file" accept=".pdf" (change)="onFileSelected($event)" style="display: none;">
+        </ion-button>
+        <ion-button *ngIf="!edit" (click)="click()" expand="block" [color]="documentoOpcional ? 'success' : 'primary'" fill="clear" slot="end">
+          <ion-label>{{documentoOpcional ? 'Archivo Cargado' : 'Seleccionar archivo'}}</ion-label>
+          <input id="opcional" type="file" accept=".pdf" (change)="onFileSelected($event)" style="display: none;">
+        </ion-button>
+        
+      </ion-item>
+      <ion-button (click)="save()" [disabled]="!logotipo || empresa === ''" expand="block" class="my-3" shape="round">
+        {{edit ? 'Actualizar' : 'Crear'}} 
+      </ion-button>
+    </div>
+      </div>
+</ion-content>

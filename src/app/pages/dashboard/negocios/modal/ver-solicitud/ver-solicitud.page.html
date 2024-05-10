@@ -1,0 +1,185 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="secondary">
+    <ion-button color="light" slot="start" (click)="modalc.dismiss()" expand="block" fill="clear" shape="round">
+      <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+    </ion-button>
+    <ion-title>Solicitud de {{oportunidad.empresa}}</ion-title>
+    <ion-button *ngIf="!ext" slot="end" color="light" (click)=" changeEdit()" fill="clear">
+      <ion-icon slot="icon-only" [name]="edit ? 'save' : 'pencil'"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <div class="container mt-3">
+    <h5 class="ion-padding h5" style="color: red;">Información de la Empresa</h5>
+    <ion-item lines="none">
+      <ion-text color="dark" slot="start" >
+       <h5>No. Afiliado</h5>
+      </ion-text>
+      <ion-text *ngIf="!edit" color="dark" slot="end">
+        <h5><b>{{oportunidad.afiliado}}</b></h5>
+       </ion-text>
+       <ion-input *ngIf="edit" slot="end" [readonly]="!edit" labelPlacement="floating" label="Edita " [(ngModel)]="oportunidad.afiliado" type="text" > </ion-input>
+     </ion-item>
+     <ion-item lines="none">
+      <ion-text color="dark" slot="start" >
+       <h5>Empresa</h5>
+      </ion-text>
+      <ion-text *ngIf="!edit" color="dark" slot="end">
+       <h5><b>{{oportunidad.empresa}}</b></h5>
+      </ion-text>
+      <ion-input *ngIf="edit" slot="end" [readonly]="!edit"  labelPlacement="floating" label="Edita " [(ngModel)]="oportunidad.empresa" type="text" > </ion-input>
+     </ion-item>
+     <ion-item lines="none">
+      <ion-text color="dark" slot="start" >
+       <h5>Denominación</h5>
+      </ion-text>
+      <ion-text *ngIf="!edit" color="dark" slot="end">
+        <h5><b>{{oportunidad.denominacion}}</b></h5>
+       </ion-text>
+       <ion-input *ngIf="edit" slot="end" [readonly]="!edit"  labelPlacement="floating" label="Edita " [(ngModel)]="oportunidad.denominacion" type="text" > </ion-input>
+     </ion-item>
+    <ion-item lines="none">
+      <ion-text color="dark" slot="start" >
+       <h5>RFC</h5>
+      </ion-text>
+      <ion-text *ngIf="!edit" color="dark" slot="end">
+        <h5><b>{{oportunidad.rfc}}</b></h5>
+       </ion-text>
+       <ion-input *ngIf="edit" slot="end" [readonly]="!edit"  labelPlacement="floating" label="Edita " [(ngModel)]="oportunidad.rfc" type="text" > </ion-input>
+     </ion-item>
+    <ion-item lines="none">
+      <ion-text color="dark" slot="start" >
+       <h5>Calle</h5>
+      </ion-text>
+      <ion-text *ngIf="!edit" color="dark" slot="end">
+        <h5><b>{{oportunidad.calle}}</b></h5>
+       </ion-text>
+       <ion-input *ngIf="edit" slot="end" [readonly]="!edit"  labelPlacement="floating" label="Edita " [(ngModel)]="oportunidad.calle" type="text" > </ion-input>
+     </ion-item>
+     <ion-item lines="none">
+      <ion-text color="dark" slot="start" >
+       <h5>Colonia</h5>
+      </ion-text>
+      <ion-text *ngIf="!edit" color="dark" slot="end">
+        <h5><b>{{oportunidad.colonia}}</b></h5>
+       </ion-text>
+       <ion-input *ngIf="edit" slot="end" [readonly]="!edit"  labelPlacement="floating" label="Edita " [(ngModel)]="oportunidad.colonia" type="text" > </ion-input>
+     </ion-item>
+     <ion-item lines="none">
+      <ion-text color="dark" slot="start" >
+       <h5>Municipio</h5>
+      </ion-text>
+      <ion-text *ngIf="!edit" color="dark" slot="end">
+        <h5><b>{{oportunidad.municipio}}</b></h5>
+       </ion-text>
+       <ion-input *ngIf="edit" slot="end" [readonly]="!edit"  labelPlacement="floating" label="Edita " [(ngModel)]="oportunidad.municipio" type="text" > </ion-input>
+     </ion-item>
+     <ion-item lines="none">
+      <ion-text color="dark" slot="start" >
+       <h5>Estado</h5>
+      </ion-text>
+      <ion-text *ngIf="!edit" color="dark" slot="end">
+        <h5><b>{{oportunidad.estado}}</b></h5>
+       </ion-text>
+       <ion-input *ngIf="edit" slot="end" [readonly]="!edit"  labelPlacement="floating" label="Edita " [(ngModel)]="oportunidad.estado" type="text" > </ion-input>
+     </ion-item>
+     <ion-item lines="none">
+      <ion-text color="dark" slot="start" >
+       <h5>WebSite</h5>
+      </ion-text>
+      <ion-text *ngIf="!edit" color="dark" slot="end">
+        <h5><b>{{oportunidad.web}}</b></h5>
+       </ion-text>
+       <ion-input *ngIf="edit" slot="end" [readonly]="!edit"  labelPlacement="floating" label="Edita " [(ngModel)]="oportunidad.web" type="text" > </ion-input>
+     </ion-item>
+     
+    <ion-item lines="none" *ngIf="oportunidad.especialidades.length > 0 && !edit">
+      <ion-label color="dark" slot="start" >
+        <h5 style="color: red;">Especialidades</h5>
+        <p *ngFor="let item of oportunidad.especialidades">{{item}}</p>
+      </ion-label>
+     </ion-item>
+
+     <div lines="none" *ngIf="edit" class="ion-padding">
+      <h5 style="color: red;" *ngIf="negocio.especialidades.length>0">Especialidades</h5> <br>
+      <ion-checkbox [checked]="findEspecialidad(item)" (ionChange)="setEspecialidad($event,item)" *ngFor="let item of negocio?.especialidades"  class="m-3">{{item}}</ion-checkbox>
+     </div>
+
+     <h5 class="ion-padding h5 font-weight" style="color: red;">Información de Contacto</h5>
+     <ion-item lines="none">
+      <ion-text color="dark" slot="start" >
+       <h5>Nombre</h5>
+      </ion-text>
+      <ion-text color="dark" slot="end">
+       <h5><b>{{oportunidad.contacto.nombre}} {{oportunidad.contacto.paterno}} {{oportunidad.contacto.materno}}</b></h5>
+      </ion-text>
+     </ion-item>
+     <ion-item lines="none">
+      <ion-text color="dark" slot="start" >
+       <h5>Correo Electrónico</h5>
+      </ion-text>
+      <ion-text *ngIf="!edit" color="dark" slot="end">
+        <h5><b>{{oportunidad.contacto.email}}</b></h5>
+       </ion-text>
+       <ion-input *ngIf="edit" slot="end" [readonly]="!edit"  labelPlacement="floating" label="Edita " [(ngModel)]="oportunidad.contacto.email" type="text" > </ion-input>
+
+     </ion-item>
+     <ion-item lines="none">
+      <ion-text color="dark" slot="start" >
+       <h5>Teléfono Celular</h5>
+      </ion-text>
+      <ion-text *ngIf="!edit" color="dark" slot="end">
+        <h5><b>{{oportunidad.contacto.telefono}}</b></h5>
+       </ion-text>
+       <ion-input *ngIf="edit" slot="end" [readonly]="!edit"  labelPlacement="floating" label="Edita " [(ngModel)]="oportunidad.contacto.telefono" type="text" > </ion-input>
+     </ion-item>
+     <ion-item lines="none">
+      <ion-text color="dark" slot="start" >
+       <h5>Teléfono Oficina</h5>
+      </ion-text>
+      <ion-text *ngIf="!edit" color="dark" slot="end">
+        <h5><b>{{oportunidad.contacto.telefonoOficina}}</b></h5>
+       </ion-text>
+       <ion-input *ngIf="edit" slot="end" [readonly]="!edit"  labelPlacement="floating" label="Edita " [(ngModel)]="oportunidad.contacto.telefonoOficina" type="text" > </ion-input>
+     </ion-item>
+
+
+     <div *ngIf="!edit">
+      <h5 class="ion-padding h5" style="color: red;">Documentos</h5>
+      <ion-item lines="none" *ngFor="let item of oportunidad.documentos">
+        <ion-button slot="start" fill="clear" (click)="download(item)">
+          <ion-icon slot="icon-only" name="download-outline"></ion-icon>
+        </ion-button>
+        <ion-text color="dark" slot="start" >
+         <h5 class="mb-0 pb-0">{{item.documento}}</h5>
+        </ion-text>
+        <ion-button (click)="view(item)" expand="block" slot="end" shape="round">
+        Ver Archivo
+        </ion-button>
+       </ion-item>
+     </div>
+
+     <div *ngIf="edit">
+      <h5 class="ion-padding h5" style="color: red;">Documentos</h5>
+      <ion-item *ngFor="let item of negocio.documentos; let i = index">
+       <ion-label>
+         {{item.texto}} 
+         <p>
+           {{item.descripcion}} <br>
+           (formato PDF)
+         </p>
+       
+       </ion-label>
+       <ion-button (click)="click(item.texto)" expand="block" [color]="files[i]?.uri ? 'success' : 'primary'" fill="clear" slot="end">
+         <ion-label>{{files[i].uri ? 'Archivo Cargado' : 'Seleccionar archivo'}}</ion-label>
+         <input [id]="item.texto" type="file" accept=".pdf" (change)="onFileSelected($event, i)" style="display: none;">
+       </ion-button>
+       
+     </ion-item>
+     </div>
+  </div>
+
+</ion-content>

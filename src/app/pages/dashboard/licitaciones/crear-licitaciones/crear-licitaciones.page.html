@@ -1,0 +1,78 @@
+<ion-content [fullscreen]="true">
+  <br>
+  <ion-toolbar  color="dark" class=" py-2">
+    <br>
+    <h1 class="ms-2 ms-md-5 mb-0 titulo"><b> {{edit ? 'Editar ' : 'Crear '}} Licitación</b></h1>
+    <hr class="palito ms-2 ms-md-5 mt-0 mb-3">
+
+    <ion-button slot="end" shape="round" class="mx-1 mt-2" (click)="click('in')" expand="block" [color]="file?.uri ? 'success' : 'primary'">
+      <ion-label>{{file?.uri ? 'Archivo Cargado' : 'Subir Licitaciones'}}</ion-label>
+      <input id="in" type="file" accept=".xls, .cvc, .xlsx" (change)="onFileSelected($event)" style="display: none;">
+    </ion-button>
+  </ion-toolbar>
+  <div class="mt-1 px-4">  
+
+    <div class="container">
+      <form [formGroup]="licitacionForm">
+  
+        <div class="row">
+          <div class="col-md-4 my-3">
+            <ion-input class="border my-2" type="text" label="Procedimiento" labelPlacement="floating" formControlName="procedimiento"></ion-input>
+          </div>
+          <div class="col-md-4 my-3">
+            <ion-input class="border my-2" type="text" label="Portal" labelPlacement="floating" formControlName="portal"></ion-input>
+          </div>
+          <div class="col-md-4 my-3">
+            <ion-input class="border my-2" type="text" label="No. Procedimiento" labelPlacement="floating" formControlName="noProcedimiento"></ion-input>
+          </div>
+          <div class="col-md-4 my-3">
+            <ion-input class="border my-2" type="text" label="Unidad Compradora" labelPlacement="floating" formControlName="unidadCompradora"></ion-input>
+          </div>
+          <div class="col-md-4 my-3">
+            <ion-input class="border my-2" type="text" label="Unidad Compradora" labelPlacement="floating" formControlName="unidadCompradora"></ion-input>
+          </div>
+          <div class="col-md-4 my-3">
+            <ion-textarea rows="10" class="border my-2" type="text" label="Descripción de expediente" labelPlacement="floating" formControlName="descripcionExpediente"></ion-textarea>
+          </div>
+      
+          <div class="col-md-4 my-3 my-3">
+            <h5>Fecha de Publicación</h5>
+              <ion-datetime max="{{year+20}}-01-01" formControlName="fechaPublicacion" >
+                <span slot="time-label">Hora</span>
+              </ion-datetime>
+          </div>
+          <div class="col-md-4 my-3 my-3">
+            <h5>Fecha Limite para Bases</h5>
+              <ion-datetime max="{{year+20}}-01-01" formControlName="fechaLimiteBases" >
+                <span slot="time-label">Hora</span>
+              </ion-datetime>
+          </div>
+          <div class="col-md-4 my-3 my-3">
+            <h5>Fecha de Apertura</h5>
+              <ion-datetime max="{{year+20}}-01-01" formControlName="fechaapertura" >
+                <span slot="time-label">Hora</span>
+              </ion-datetime>
+          </div>
+          <div class="col-md-4 my-3 my-3">
+            <h5>Fecha del Fallo</h5>
+              <ion-datetime max="{{year+20}}-01-01" formControlName="fallo" >
+                <span slot="time-label">Hora</span>
+              </ion-datetime>
+          </div>
+ 
+          <div class="col-md-4 my-3">
+            <ion-textarea class="border my-2" type="text" label="Vigencia" labelPlacement="floating" formControlName="vigencia"></ion-textarea>
+          </div>
+          <div class="col-md-4 my-3">
+            <ion-textarea class="border my-2" type="text" label="Link" labelPlacement="floating" formControlName="link"></ion-textarea>
+          </div>
+        </div>
+        <ion-button (click)="save()" expand="block" shape="round">
+          {{edit ? 'Actualizar ' : 'Crear '}} licitación
+        </ion-button>
+        
+      </form>
+    </div>
+  
+  </div>
+</ion-content>

@@ -1,0 +1,7 @@
+{
+  "name": "generic-admin-system",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

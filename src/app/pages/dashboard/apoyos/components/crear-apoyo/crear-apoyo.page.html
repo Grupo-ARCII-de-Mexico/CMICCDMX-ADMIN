@@ -1,0 +1,40 @@
+
+<ion-content [fullscreen]="true">
+
+  <br>
+  <ion-toolbar  color="dark" class=" py-2">
+    <br>
+    <h1 class="ms-2 ms-md-5 mb-0 titulo"><b> {{identificador!==0 ? 'Editar Apoyo' : 'Crear Apoyo'}}</b></h1>
+    <hr class="palito ms-2 ms-md-5 mt-0 mb-3">
+  </ion-toolbar>
+
+  <div class="container">
+
+    <form [formGroup]="form" >
+      <ion-item class="ion-margin-vertical" lines="none" class="border mt-2">
+        <ion-input label="Titulo" labelPlacement="floating" required formControlName="titulo" type="text"></ion-input>
+      </ion-item>
+      <ion-item button (click)="getImage()" class="ion-margin-vertical border" lines="none">
+        <ion-text  slot="start" color="primary">
+          <h5>Subir Imagen</h5>
+        </ion-text>
+        <ion-img slot="end" style="max-width: 300px;" [src]="imagen"></ion-img>
+      </ion-item>
+      
+      <div class="NgxEditor__Wrapper">
+        <ngx-editor-menu [toolbar]="toolbar" [editor]="editor"> </ngx-editor-menu>
+        <ngx-editor  [editor]="editor"  formControlName="descripcion" [placeholder]="'Descripción del evento'"></ngx-editor>
+      </div>
+      <ion-button (click)="save()" *ngIf="identificador === 0 || !identificador" expand="block" class="my-3" shape="round"  color="primary" [disabled]="form.invalid">
+        Crear
+      </ion-button>
+      <ion-button (click)="update()" *ngIf="identificador !== 0" expand="block" class="my-3" shape="round"  color="primary"  [disabled]="form.invalid">
+        Guardar Cambios
+      </ion-button>
+
+    </form>
+
+
+   
+  </div>
+</ion-content>

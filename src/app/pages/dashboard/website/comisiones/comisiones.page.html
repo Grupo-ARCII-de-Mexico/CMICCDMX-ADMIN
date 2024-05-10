@@ -1,0 +1,32 @@
+<ion-content [fullscreen]="true">
+  <br>
+  <ion-toolbar  color="dark" class=" py-2">
+    <br>
+    <h1 class="ms-2 ms-md-5 mb-0 titulo"><b> {{editar ? 'Editar' : 'Crear'}} Comisión</b></h1>
+    <hr class="palito ms-2 ms-md-5 mt-0 mb-3">
+  </ion-toolbar>
+
+  <div class="container px-5">
+    <form [formGroup]="sliderForm">
+      <ion-item lines="none">
+        <ion-button (click)="addImage()" slot="start" shape="round">
+          Subir Fotografía
+        </ion-button>
+  
+        <ion-avatar slot="end" style="height: 150px; width: 150px;">
+          <ion-img [src]="image"  ></ion-img>
+        </ion-avatar>
+      </ion-item>
+      <ion-input type="text" class="my-2 border" label="Nombre de la comisión" labelPlacement="floating" formControlName="texto" ></ion-input>
+      
+      <ion-input type="text" class="my-2 border" label="Url de redireccionamiento" labelPlacement="floating" formControlName="url" ></ion-input>
+    
+      <ion-button [disabled]="!image" (click)="save()" expand="block"  shape="round">
+        {{editar ? 'Guardar Cambios': 'Crear Comisión'}}
+      </ion-button>
+    </form>
+       
+  </div>
+
+
+</ion-content>

@@ -1,0 +1,29 @@
+
+<ion-content [fullscreen]="true">
+  <div class="h-100 d-flex fondo">
+    <ion-card class="m-auto" mode="ios">
+      <ion-card-header class="d-flex">
+        <ion-img src="https://neixtmedia.com/assets/img/Logotipo.png" class="img-fluid mx-auto"></ion-img>
+      </ion-card-header>
+      <ion-card-content>
+        <form [formGroup]="registerForm" (ngSubmit)="register()">
+          <ion-item>
+            <ion-input label="Nombre" labelPlacement="floating" required formControlName="names" type="text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input label="Correo" labelPlacement="floating" required formControlName="email" type="text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input label="Contraseña" labelPlacement="floating"  required formControlName="password" type="text"></ion-input>
+          </ion-item>
+          <div class="d-flex my-3">
+            <ion-button class="mx-auto" block color="primary" shape="round" type="submit" [disabled]="registerForm.invalid">
+              Registrarse 
+            </ion-button>
+          </div>
+        </form>
+      </ion-card-content>
+    </ion-card>
+  </div>
+  </ion-content>
+  

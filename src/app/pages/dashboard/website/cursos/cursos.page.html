@@ -1,0 +1,42 @@
+<ion-content [fullscreen]="true">
+  <br>
+  <ion-toolbar  color="dark" class=" py-2">
+    <br>
+    <h1 class="ms-2 ms-md-5 mb-0 titulo"><b> {{editar ? 'Editar' : 'Crear'}} Cursos</b></h1>
+    <hr class="palito ms-2 ms-md-5 mt-0 mb-3">
+  </ion-toolbar>
+
+  <div class="container px-5">
+    <form [formGroup]="sliderForm">
+      <ion-item lines="none">
+        <ion-button (click)="addImage()" slot="start" shape="round">
+          Subir Fotografía
+        </ion-button>
+        <ion-img [src]="image" slot="end" style="max-height: 150px; width: 200px;"></ion-img>
+      
+      </ion-item>
+      <ion-input type="text" class="my-2 border" label="Titulo" labelPlacement="floating" formControlName="titulo" ></ion-input>
+      
+      <ion-input type="number" class="my-2 border" label="Precio" labelPlacement="floating" formControlName="precio" ></ion-input>
+
+      <ion-input type="text" class="my-2 border" label="Link de Pago" labelPlacement="floating" formControlName="url" ></ion-input>
+      <ion-item>
+        <ion-select label="Institución del Curso" labelPlacement="floating" formControlName="tipo">
+          <ion-select-option value="FIC">FIC</ion-select-option>
+          <ion-select-option value="ITC">ITC</ion-select-option>
+          <ion-select-option value="ICIC">ICIC</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <div class="NgxEditor__Wrapper">
+        <ngx-editor-menu [toolbar]="toolbar" [editor]="editor"> </ngx-editor-menu>
+        <ngx-editor  [editor]="editor"  formControlName="informacion" [placeholder]="'Descripción del evento'"></ngx-editor>
+      </div>
+      <ion-button [disabled]="!image" (click)="save()" expand="block"  shape="round">
+        {{editar ? 'Guardar Cambios': 'Crear Curso'}}
+      </ion-button>
+    </form>
+       
+  </div>
+
+
+</ion-content>

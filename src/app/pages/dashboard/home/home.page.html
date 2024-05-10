@@ -1,0 +1,86 @@
+<ion-content [fullscreen]="true">
+  <ion-toolbar  color="dark" class="mt-4 py-2">
+    <br>
+    <h1 class="ms-2 ms-md-5 mb-0 titulo"><b>Dashboard</b></h1>
+    <hr class="palito ms-2 ms-md-5 mt-0 mb-3">
+  </ion-toolbar>
+
+  <br><br>
+
+<div class="container">
+
+  <div class="row">
+    <div class="col-md-6 my-4">
+      <ion-card button routerLink="/dashboard/eventos">
+        <ion-card-header>
+          <h1 class="mb-0"><b>Próximos Eventos </b></h1>
+          <hr class="palito ms-2 ms-md-5 mt-0 mb-3">
+        </ion-card-header>
+        <ion-card-content>
+          <ion-list>
+            <ion-item *ngFor="let item of eventos">
+              <ion-avatar slot="start">
+                <img [src]="uri+item.imagen" />
+              </ion-avatar>
+              <ion-label>
+                <h5>{{item.titulo}}</h5>
+                <p>{{mon(item.fechaInicio)}}</p>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+     
+
+        </ion-card-content>
+      </ion-card>
+    </div>
+    <div class="col-md-6 my-4">
+      <ion-card >
+        <ion-card-header>
+          <h3 class="mb-0 text-center"><b>Aniversarios/Cumpleaños de Afiliados </b></h3>
+          <div class="d-flex">
+            <hr class="palito  mt-0 mb-3 mx-auto">
+          </div>
+        </ion-card-header>
+        <ion-card-content>
+          
+          <ion-segment  [(ngModel)]="aniversario">
+            <ion-segment-button [value]="true">
+              <ion-label>Aniversarios</ion-label>
+            </ion-segment-button>
+            <ion-segment-button [value]="false">
+              <ion-label>Cumpleaños</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+     
+          <ion-list *ngIf="aniversario">
+            <ion-item *ngFor="let item of afiliadosInicioOperaciones">
+              <ion-label>
+                <h2>{{item.nombre}}</h2>
+                <p>{{mon(item.inicioOperaciones)}}</p>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+
+          <ion-list *ngIf="!aniversario">
+            <ion-item *ngFor="let item of afiliadosCumpleanos">
+              <ion-label>
+                <h2>{{item.representanteLegal}}</h2>
+                <p>{{mon(item.cumpleanos)}}</p>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+          <div *ngIf="aniversario && afiliadosInicioOperaciones.length==0">
+            <h3 class="text-center"><strong>No Hay Aniversarios Cerca</strong></h3>
+          </div>
+          <div *ngIf="!aniversario && afiliadosCumpleanos.length==0">
+            <h3 class="text-center"><strong>No Hay Cumpleaños Cerca</strong></h3>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+
+</div>
+
+
+</ion-content>

@@ -1,0 +1,12 @@
+
+<ion-content [fullscreen]="true">
+
+  <ion-buttons >
+   <ion-button class="mx-2" *ngFor="let item of buttons" [color]="item.color" shape="round" fill="solid" (click)="open(item.url)">
+    <ion-icon slot="icon-only" [name]="item.icon"></ion-icon>
+   </ion-button>
+   <a class="mx-2" href="https://twitter.com/cmic_cdmx" target="_blank">
+   <img src="https://seeklogo.com/images/T/twitter-x-logo-0339F999CF-seeklogo.com.png" alt="">
+  </a>
+  </ion-buttons>
+</ion-content>

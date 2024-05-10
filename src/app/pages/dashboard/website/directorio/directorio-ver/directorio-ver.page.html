@@ -1,0 +1,46 @@
+<ion-content [fullscreen]="true">
+  <br>
+  <ion-toolbar  color="dark" class=" py-2">
+    <br>
+    <h1 class="ms-2 ms-md-5 mb-0 titulo"><b> Directorio</b></h1>
+    <hr class="palito ms-2 ms-md-5 mt-0 mb-3">
+  </ion-toolbar>
+  <div class=" px-3">
+    <div class="container">
+      <div class="d-flex mt-1 d-none">
+        <ion-searchbar class="ms-auto me-3 my-0 w-100" placeholder="Buscar Persona" inputmode="text" type="text" [debounce]="250" ></ion-searchbar>
+      </div>
+      <table class="table mt-3">
+        <thead class="red">
+          <tr>
+            <th scope="col" class="red d-flex">
+              <span>Asociado</span>
+              <span class="ms-auto me-5">Opciones</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+       
+  <ion-list class="w-100" *ngFor="let depa of depas ; let ind = index">
+      <ion-item class="w-100" *ngFor="let item of depa.directorios; let ind = index">
+        <ion-label>{{item.nombre}}
+        <p>{{item.cargo}}</p>
+        </ion-label>
+        <ion-buttons color="primary" slot="end">
+          <ion-button color="primary" routerLink="/dashboard/website/directorio/{{item.id}}">
+            <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+          </ion-button>
+          <ion-button color="primary" (click)="deleteDirectorio(item.id)" slot="end">
+            <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-reorder slot="end"></ion-reorder>
+      </ion-item>
+  </ion-list>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+</ion-content>

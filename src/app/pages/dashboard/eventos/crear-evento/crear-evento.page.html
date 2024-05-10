@@ -1,0 +1,186 @@
+<ion-content [fullscreen]="true">
+  <br>
+  <ion-toolbar  color="dark" class=" py-2">
+    <br>
+    <h1 class="ms-2 ms-md-5 mb-0 titulo"><b> {{edit ? 'Editar ' : 'Crear '}} Evento</b></h1>
+    <hr class="palito ms-2 ms-md-5 mt-0 mb-3">
+  </ion-toolbar>
+  <div class=" px-4">
+ 
+    <div class="container">
+ 
+      <div class="container" *ngIf="eventForm">
+        
+
+<form [formGroup]="eventForm" (ngSubmit)="edit ? editar() :save()">
+  <div class="text-center mt-3"><h4>Tipo Evento <ion-text color="danger">*</ion-text></h4></div>
+  <ion-segment formControlName="tipoEvento">
+    <ion-segment-button [value]="0">
+      <ion-label>Presencial</ion-label>
+    </ion-segment-button>
+    <ion-segment-button [value]="1">
+      <ion-label>Hibrido</ion-label>
+    </ion-segment-button>
+    <ion-segment-button [value]="2">
+      <ion-label>Virtual</ion-label>
+    </ion-segment-button>
+  </ion-segment>         
+  <ion-item>
+    <ion-input labelPlacement="floating"  required  type="text" formControlName="titulo">
+      <div slot="label">Titulo <ion-text color="danger">*</ion-text></div>
+    </ion-input>
+  </ion-item>
+  <div class="row my-3">
+    <div class="col-md-4 mx-auto">
+      <ion-label class="text-center h4" >Fecha y Hora del Evento <ion-text color="danger">*</ion-text></ion-label>
+      <ion-datetime hourCycle="h12" minuteValues="0,15,30,45" formControlName="fechaInicio" slot="end" >
+        <span slot="time-label">Tiempo</span></ion-datetime>
+    </div>
+    <div class="col-md-4 mx-auto">
+      <ion-label class="text-center h4" >Hora de Fin<ion-text color="danger">*</ion-text></ion-label>
+      <ion-datetime hourCycle="h12" presentation="time" minuteValues="0,15,30,45" slot="end" formControlName="fechaFin"></ion-datetime>
+    </div>
+  </div>
+  <ion-item button (click)="upload()" >
+    <ion-img slot="end" [src]="img" *ngIf="img" style="width: 300px;" class="my-3"></ion-img> <br>
+  <ion-label>Subir Imagen</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-text>Evento Gratuito</ion-text>
+    <ion-toggle formControlName="esGratis" slot="end"></ion-toggle>
+  </ion-item>
+  <ion-item>
+    <ion-text>Permitir Registro de Prensa</ion-text>
+    <ion-toggle formControlName="hayPrensa" slot="end"></ion-toggle>
+  </ion-item>
+  <ion-item>
+    <ion-text>Cupo Máximo</ion-text>
+    <ion-toggle formControlName="tieneCupoMaximo" slot="end"></ion-toggle>
+  </ion-item>
+  <ion-item *ngIf="eventForm.controls['tieneCupoMaximo'].value">
+    <ion-input required labelPlacement="floating" type="number" formControlName="cupo">
+      <div slot="label">Cupo <ion-text color="danger">*</ion-text></div>
+    </ion-input>
+  </ion-item>
+  <ion-item *ngIf="!eventForm.controls['esGratis'].value">
+    <ion-select label="Formas de Pago" labelPlacement="floating"  interface="popover" formControlName="pasarelasPago" multiple="true" placeholder="Selecciona">
+      <ion-select-option [value]="tipoPago.TRANSFERENCIA">Transferencia</ion-select-option>
+      <ion-select-option [value]="tipoPago.STRIPE">Tarjetas (Stripe) </ion-select-option>
+    </ion-select>
+  </ion-item>
+<ion-item>
+  <ion-select label="Público(s) Objetivo(s)" multiple="true" class="col-md-4 my-3" slot="start" formControlName="publicos" okText="Aceptar" cancelText="Cerrar" placeholder="Dirigido a..." >
+    <ion-select-option value="0">Afiliado</ion-select-option>
+    <ion-select-option value="1">Público General</ion-select-option>
+    <ion-select-option value="2">Estudiante</ion-select-option>
+  </ion-select>
+</ion-item>
+  <div *ngIf="!eventForm.controls['esGratis'].value"  class="my-3">
+    <ion-item>
+      <ion-label>Costos</ion-label>
+      <ion-button (click)="agregar()" expand="block" fill="clear" shape="round">
+        Agregar Costos
+      </ion-button>
+    </ion-item>
+    <div   *ngFor="let p of costos; let i = index" class="ms-3 border-bottom">
+       <ion-select class="col-md-4 my-3" slot="start" [value]="p.publico" okText="Aceptar" (ionChange)="setTipo($event,i,'publico')" cancelText="Cerrar" placeholder="Dirigido a..." >
+          <ion-select-option [value]="tipoPublico.AFILIADOS">Afiliado</ion-select-option>
+          <ion-select-option [value]="tipoPublico.PUBLICO_GENERAL">Público General</ion-select-option>
+          <ion-select-option [value]="tipoPublico.ESTUDIANTES">Estudiante</ion-select-option>
+        </ion-select>
+      <ion-input (ionChange)="setTipo($event,i,'nombre')" [value]="p.nombre" class="border col-md-4 my-3" type="text" label="Ingrese Nombre" labelPlacement="floating" placeholder="Cena"></ion-input>
+      <ion-input (ionChange)="setTipo($event,i,'costo')" [value]="p.costo"  label="Ingrese Precio" labelPlacement="floating" placeholder="800"  slot="end"   class=" border col-md-4 my-3" type="number"  ></ion-input>
+      <ion-button (click)="quitar(i)" slot="end">
+        <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+      </ion-button>
+    </div>
+    
+  </div>
+  <div  class="my-3">
+    <ion-item>
+      <ion-label>Agenda</ion-label>
+      <ion-button (click)="agregarAgenda()" expand="block" fill="clear" shape="round">
+        Agregar Agenda
+      </ion-button>
+    </ion-item>
+    <div   *ngFor="let p of agenda; let i = index" class="ms-3 border-bottom">
+      <ion-input (ionChange)="setTipoAgenda($event,i,'nombre')" [value]="p.nombre" class="border col-md-4 my-3" type="text" label="Ingrese Actividad" labelPlacement="floating" placeholder="Cena"></ion-input>
+      <ion-input (ionChange)="setTipoAgenda($event,i,'horas')" [value]="p.horas"  label="Ingrese Horario" labelPlacement="floating" placeholder="800"  slot="end"   class=" border col-md-4 my-3" type="text"  ></ion-input>
+      <ion-button (click)="quitarAgenda(i)" slot="end">
+        <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+      </ion-button>
+    </div>
+    
+  </div>
+
+  <div  class="my-3">
+    <ion-item>
+      <ion-label>Ponentes</ion-label>
+      <ion-button (click)="agregarPonente()" expand="block" fill="clear" shape="round">
+        Agregar Ponente
+      </ion-button>
+    </ion-item>
+    <div   *ngFor="let p of ponentes; let i = index" class="ms-3 border-bottom">
+      <ion-input (ionChange)="setTipoPonente($event,i,'nombre')" [value]="p.nombre" class="border col-md-4 my-3" type="text" label="Ingrese Actividad" labelPlacement="floating" placeholder=""></ion-input>
+      <ion-input (ionChange)="setTipoPonente($event,i,'cargo')" [value]="p.cargo"  label="Ingrese Cargo / Oficio / Puesto" labelPlacement="floating" placeholder="800"  slot="end"   class=" border col-md-4 my-3" type="texto"  ></ion-input>
+      <ion-button (click)="subirFotoPonente(i)"  shape="round">
+        {{ponentes[i].foto ? 'Foto Cargada' : 'Subir Fotografia'}}
+      </ion-button>
+      <ion-button (click)="quitarPonente(i)" slot="end">
+        <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+      </ion-button>
+    </div>
+    
+  </div>
+  <ion-item *ngIf="this.eventForm.controls['tipoEvento'].value != 2">
+    <ion-input    type="text" formControlName="lugar">
+      <div slot="label">Escriba la dirección: </div>
+    </ion-input>
+  </ion-item>
+  <ion-item *ngIf="this.eventForm.controls['tipoEvento'].value != 2">
+    <ion-label>Agregar Mapa <ion-text color="danger">*</ion-text></ion-label>
+    <ion-button (click)="verMapa()" expand="block" shape="round">
+      Abrir Mapa
+    </ion-button>
+  </ion-item>
+  <br>
+    <div class="row" *ngIf="this.eventForm.controls['tipoEvento'].value != 0">
+      <div class="col-md-6">
+        <ion-label class="ion-margin-vertical">Generar Liga Zoom Automáticamente <ion-text color="danger">*</ion-text></ion-label>
+        <ion-button class="my-2" [disabled]="!this.eventForm.controls['titulo'].value" slot="start" (click)="generateZoom()" expand="block"  shape="round">
+          Generar Liga de Zoom
+        </ion-button>
+      </div>
+      <div class="col-md-6">
+        <ion-label class="ion-margin-vertical">Agregar Liga Zoom <ion-text color="danger">*</ion-text></ion-label>
+       <div class="row">
+        <ion-input [readonly]="disabled" class="border col-md-6 my-2 " type="text" formControlName="zoom" placeholder="URL de Zoom"></ion-input>
+        <ion-input [readonly]="disabled" class="border col-md-6 my-2 " type="text" formControlName="zoomPassword" maxlength="8" placeholder="Contraseña"></ion-input>
+       </div>
+      </div>
+    </div>
+  <br>
+  <ion-label class=" my-4">Detalles del evento <ion-text color="danger">*</ion-text></ion-label>
+  <br>
+  <div class="NgxEditor__Wrapper">
+    <ngx-editor-menu [toolbar]="toolbar" [editor]="editor"> </ngx-editor-menu>
+    <ngx-editor  [editor]="editor" formControlName="detalles" [placeholder]="'Descripción del evento'"></ngx-editor>
+  </div>
+  <div class="d-flex mt-4">
+  <ion-button *ngIf="!edit" [disabled]="!img || eventForm.invalid" shape="round" color="primary" type="submit"  class="mt-2">
+    Crear Evento
+  </ion-button>
+  <ion-button *ngIf="edit" shape="round" color="primary" type="submit"  class="mt-2">
+    Actualizar Evento
+  </ion-button>
+  
+  <ion-button class="d-none" shape="round" color="primary"  class="mt-2 d-none">
+    Vista Previa
+  </ion-button>
+  </div>
+</form>
+      </div>
+ 
+    </div>
+  </div>
+</ion-content>

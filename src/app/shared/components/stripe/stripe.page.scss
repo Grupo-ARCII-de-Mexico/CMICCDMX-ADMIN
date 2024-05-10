@@ -1,0 +1,53 @@
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 0%;
+    }
+    100% {
+        background-position: 100% 100%;
+    }
+}
+
+.visa{
+    background: blue;
+    color: white!important;
+    background-size: 200% 200%;
+    transition: 500ms;
+}
+
+.mastercard{
+    background: red;
+    color: white!important;
+    background-size: 200% 200%;
+    transition: 500ms;
+}
+
+.ngx-stripe-card-number input[type="text"] {
+    filter: blur(4px);
+  }
+.amex{
+    background: green;
+    color: white!important;
+    background-size: 200% 200%;
+    transition: 500ms;
+}
+
+.initial{
+    background: black;
+    color: white!important;
+    background-size: 200% 200%;
+    transition: 500ms;
+}
+
+
+
+ion-card-content {
+    border-radius: 15px;
+}
+
+    .img{
+        width: 180px;
+    }
+
+    .chip{
+        width: 80px;
+    }

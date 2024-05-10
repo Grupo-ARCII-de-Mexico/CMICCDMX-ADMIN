@@ -1,0 +1,88 @@
+<ion-content [fullscreen]="true">
+  <br>
+  <ion-toolbar  color="dark" class=" py-2">
+    <br>
+    <h1 class="ms-2 ms-md-5 mb-0 titulo"><b> {{edit ? 'Editar ' : 'Crear '}} Afiliado</b></h1>
+    <hr class="palito ms-2 ms-md-5 mt-0 mb-3">
+  </ion-toolbar>
+  <div class="mt-1 px-4">  
+
+    <div class="container">
+      <form [formGroup]="afiliadoForm">
+  
+        <div class="row">
+          <div class="col-md-4 my-3">
+            <h5>Fecha de Emisión</h5>
+            <ion-datetime formControlName="fechaEmision" presentation="date" ></ion-datetime>
+          </div>
+          <div class="col-md-4 my-3">
+            <h5>Fecha de Facturación</h5>
+            <ion-datetime formControlName="fechaFacturacion" presentation="date" ></ion-datetime>
+          </div>
+          <div class="col-md-4 my-3">
+            <h5>Fecha de Pago de Delegación</h5>
+            <ion-datetime formControlName="fechaPagoDelegacion" presentation="date" ></ion-datetime>
+          </div>
+          <div class="col-md-4 my-3">
+            <ion-input class="border my-2" type="number" label="Registro" labelPlacement="floating" formControlName="registro"></ion-input>
+          </div>
+          <div class="col-md-4 my-3">
+            <ion-input class="border my-2" type="number" label="Certificado" labelPlacement="floating" formControlName="certificado"></ion-input>
+          </div>
+          <div class="col-md-4 my-3">
+            <ion-input class="border my-2" type="number" label="NIP" labelPlacement="floating" formControlName="nip"></ion-input>
+          </div>
+          <div class="col-md-4 my-3">
+            <h5>Inicio de Operaciones</h5>
+            <ion-datetime formControlName="inicioOperaciones" presentation="date" ></ion-datetime>
+          </div>
+          <div class="col-md-4 my-3">
+            <ion-input class="border my-2" type="text" label="Nombre" labelPlacement="floating" formControlName="nombre"></ion-input>
+          </div>
+          <div class="col-md-4 my-3">
+            <ion-input class="border my-2" type="text" label="Representante Legal" labelPlacement="floating" formControlName="representanteLegal"></ion-input>
+          </div>
+          <div class="col-md-4 my-3">
+            <ion-input class="border my-2" type="text" label="Tamaño" labelPlacement="floating" formControlName="tamano"></ion-input>
+          </div>
+          <div class="col-md-4 my-3">
+            <ion-input class="border my-2" type="text" label="Telefono 1" labelPlacement="floating" formControlName="telefono1"></ion-input>
+          </div>
+          <div class="col-md-4 my-3">
+            <ion-input class="border my-2" type="text" label="Telefono 2" labelPlacement="floating" formControlName="telefono2"></ion-input>
+          </div>
+          <div class="col-md-4 my-3">
+            <ion-input class="border my-2" type="text" label="Correo 1" labelPlacement="floating" formControlName="correo1"></ion-input>
+          </div>
+          <div class="col-md-4 my-3">
+            <ion-input class="border my-2" type="text" label="Correo 2" labelPlacement="floating" formControlName="correo2"></ion-input>
+          </div>
+          <div class="col-md-4 my-3">
+            <ion-input class="border my-2" type="number" label="Años Consecutivos" labelPlacement="floating" formControlName="anosConsecutivos"></ion-input>
+          </div>
+          <div class="col-md-4 my-3">
+            <ion-input class="border my-2" type="number" label="Ultimo Año" labelPlacement="floating" formControlName="ultimoAno"></ion-input>
+          </div>
+          <div class="col-md-4 my-3">
+            <ion-input class="border my-2" type="text" label="Especialidad 1" labelPlacement="floating" formControlName="especialidad1"></ion-input>
+          </div>
+          <div class="col-md-4 my-3">
+            <ion-input class="border my-2" type="text" label="Especialidad 2" labelPlacement="floating" formControlName="especialidad2"></ion-input>
+          </div>
+          <div class="col-md-4 my-3">
+            <ion-input class="border my-2" type="text" label="Especialidad 3" labelPlacement="floating" formControlName="especialidad3"></ion-input>
+          </div>
+          <div class="col-md-4 my-3">
+            <h5>Cumpleaños</h5>
+            <ion-datetime formControlName="cumpleanos" presentation="date" ></ion-datetime>
+          </div>
+        </div>
+        <ion-button (click)="save()" expand="block" shape="round">
+          {{edit ? 'Actualizar ' : 'Crear '}} Afiliado
+        </ion-button>
+        
+      </form>
+    </div>
+  
+  </div>
+</ion-content>

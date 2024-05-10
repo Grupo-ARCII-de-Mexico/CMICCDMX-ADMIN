@@ -1,0 +1,16 @@
+ngx-editor{
+    max-height: 600px; /* Establece la altura máxima antes de que aparezca el scroll */
+  overflow-y: auto; 
+}
+
+::ng-deep { /* to penetrate <ngx-editor> CSS styling */
+
+    .NgxEditor {
+      height: 400px;
+      overflow-y: scroll;
+    }
+  
+    .NgxEditor__Content {
+      min-height: 400px; /* make all of the editor area clickable */
+    }
+  }

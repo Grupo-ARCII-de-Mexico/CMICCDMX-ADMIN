@@ -1,0 +1,27 @@
+<ion-content [fullscreen]="true">
+
+    <ion-fab-button id="open-popover"  color="whatsapp" [ngClass]="{' fixed-top mt ':isIframe, 'fixed-bottom ms-auto me-3 me-md-5 mb-4': !isIframe}">
+      <ion-icon name="logo-whatsapp"></ion-icon>
+    </ion-fab-button>
+    <ion-popover mode="ios" [animated]="true" [keepContentsMounted]="true" side="top" trigger="open-popover" size="auto">
+      <ng-template style="width: 500px;">
+        <ion-header>
+          <ion-toolbar class="text-center" color="whatsappB">
+            <ion-label class="text-center"><b class="text-center">WhatsApp</b></ion-label>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content style="background-color: white;" color="ligth" class="ion-padding">
+        
+          <ion-textarea cols="100" rows="20" color="ligth" labelPlacement="floating" label="Contáctanos"  style="height: 80px;" class="border" [(ngModel)]="texto" placeholder="Contáctanos"></ion-textarea>
+
+       <div class="text-center">
+        <ion-button class="py-1" color="whatsappB" (click)="open()" [disabled]="!texto " shape="round" >
+          <ion-icon slot="start" name="send-outline"></ion-icon>
+          Enviar
+        </ion-button>
+       </div>
+        </ion-content>
+      </ng-template>
+    </ion-popover>
+
+</ion-content>

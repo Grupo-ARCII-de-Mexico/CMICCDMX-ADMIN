@@ -9,6 +9,7 @@
 UserInterfaceState.xcuserstate
 $RECYCLE.BIN/
 /android
+/src
 /.vscode
 *.log
 log.txt
@@ -20,7 +21,6 @@ log.txt
 
 # Ionic
 /.ionic
-/www
 /platforms
 /plugins
 

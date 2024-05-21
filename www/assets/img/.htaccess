@@ -1,0 +1,16 @@
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION BEGIN
+PassengerAppRoot "/home/cmiccdmx/public_html/api.cmiccdmx.org"
+PassengerBaseURI "/"
+PassengerNodejs "/home/cmiccdmx/nodevenv/public_html/api.cmiccdmx.org/16/bin/node"
+PassengerAppType node
+PassengerStartupFile dist/main.js
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION END
+ RewriteEngine On
+    RewriteRule ^$ http://127.0.0.1:9000/ [P,L]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ http://127.0.0.1:9000/$1 [P,L]
+# DO NOT REMOVE OR MODIFY. CLOUDLINUX ENV VARS CONFIGURATION BEGIN
+<IfModule Litespeed>
+</IfModule>
+# DO NOT REMOVE OR MODIFY. CLOUDLINUX ENV VARS CONFIGURATION END
